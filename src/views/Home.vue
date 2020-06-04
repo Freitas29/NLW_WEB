@@ -13,7 +13,7 @@
 
         <router-link to="/cadastro">
           <span>
-            >
+            <v-icon name="arrow-right" />
           </span>
           <strong>
             Cadastre um ponto de coleta

@@ -1,11 +1,31 @@
-#page-create-point {
+<template>
+  <div class="page-create-point">
+    <header>
+      <img src="../assets/logo.svg" />
+
+      <router-link to="/">
+        <v-icon name="arrow-left" />
+        Voltar para home
+      </router-link>
+    </header>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+
+export default {
+};
+</script>
+<style>
+.page-create-point {
   width: 100%;
   max-width: 1100px;
 
   margin: 0 auto;
 }
 
-#page-create-point header {
+.page-create-point header {
   margin-top: 48px;
 
   display: flex;
@@ -13,7 +33,7 @@
   align-items: center;
 }
 
-#page-create-point header a {
+.page-create-point header a {
   color: var(--title-color);
   font-weight: bold;
   text-decoration: none;
@@ -22,33 +42,33 @@
   align-items: center;
 }
 
-#page-create-point header a svg {
+.page-create-point header a svg {
   margin-right: 16px;
   color: var(--primary-color);
 }
 
-#page-create-point form {
+.page-create-point form {
   margin: 80px auto;
   padding: 64px;
   max-width: 730px;
-  background: #FFF;
+  background: #fff;
   border-radius: 8px;
 
   display: flex;
   flex-direction: column;
 }
 
-#page-create-point form h1 {
+.page-create-point form h1 {
   font-size: 36px;
 }
 
-#page-create-point form fieldset {
+.page-create-point form fieldset {
   margin-top: 64px;
   min-inline-size: auto;
   border: 0;
 }
 
-#page-create-point form legend {
+.page-create-point form legend {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -56,22 +76,22 @@
   margin-bottom: 40px;
 }
 
-#page-create-point form legend h2 {
+.page-create-point form legend h2 {
   font-size: 24px;
 }
 
-#page-create-point form legend span {
+.page-create-point form legend span {
   font-size: 14px;
   font-weight: normal;
   color: var(--text-color);
 }
 
-#page-create-point form .field-group {
+.page-create-point form .field-group {
   flex: 1;
   display: flex;
 }
 
-#page-create-point form .field {
+.page-create-point form .field {
   flex: 1;
 
   display: flex;
@@ -79,78 +99,78 @@
   margin-bottom: 24px;
 }
 
-#page-create-point form .field input[type=text],
-#page-create-point form .field input[type=email],
-#page-create-point form .field input[type=number] {
+.page-create-point form .field input[type="text"],
+.page-create-point form .field input[type="email"],
+.page-create-point form .field input[type="number"] {
   flex: 1;
-  background: #F0F0F5;
+  background: #f0f0f5;
   border-radius: 8px;
   border: 0;
   padding: 16px 24px;
   font-size: 16px;
-  color: #6C6C80;
+  color: #6c6c80;
 }
 
-#page-create-point form .field select {
+.page-create-point form .field select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   flex: 1;
-  background: #F0F0F5;
+  background: #f0f0f5;
   border-radius: 8px;
   border: 0;
   padding: 16px 24px;
   font-size: 16px;
-  color: #6C6C80;
+  color: #6c6c80;
 }
 
-#page-create-point form .field input::placeholder {
-  color: #A0A0B2;
+.page-create-point form .field input::placeholder {
+  color: #a0a0b2;
 }
 
-#page-create-point form .field label {
+.page-create-point form .field label {
   font-size: 14px;
   margin-bottom: 8px;
 }
 
-#page-create-point form .field :disabled {
+.page-create-point form .field :disabled {
   cursor: not-allowed;
 }
 
-#page-create-point form .field-group .field + .field {
+.page-create-point form .field-group .field + .field {
   margin-left: 24px;
 }
 
-#page-create-point form .field-group input + input {
+.page-create-point form .field-group input + input {
   margin-left: 24px;
 }
 
-#page-create-point form .field-check {
+.page-create-point form .field-check {
   flex-direction: row;
   align-items: center;
 }
 
-#page-create-point form .field-check input[type=checkbox] {
-  background: #F0F0F5;
+.page-create-point form .field-check input[type="checkbox"] {
+  background: #f0f0f5;
 }
 
-#page-create-point form .field-check label {
+.page-create-point form .field-check label {
   margin: 0 0 0 8px;
 }
 
-#page-create-point form .leaflet-container {
+.page-create-point form .leaflet-container {
   width: 100%;
   height: 350px;
   border-radius: 8px;
   margin-bottom: 24px;
 }
 
-#page-create-point form button {
+.page-create-point form button {
   width: 260px;
   height: 56px;
   background: var(--primary-color);
   border-radius: 8px;
-  color: #FFF;
+  color: #fff;
   font-weight: bold;
   font-size: 16px;
   border: 0;
@@ -160,8 +180,8 @@
   cursor: pointer;
 }
 
-#page-create-point form button:hover {
-  background: #2FB86E;
+.page-create-point form button:hover {
+  background: #2fb86e;
 }
 
 .items-grid {
@@ -194,10 +214,11 @@
 
   display: flex;
   align-items: center;
-  color: var(--title-color)
+  color: var(--title-color);
 }
 
 .items-grid li.selected {
-  background: #E1FAEC;
-  border: 2px solid #34CB79;
+  background: #e1faec;
+  border: 2px solid #34cb79;
 }
+</style>
