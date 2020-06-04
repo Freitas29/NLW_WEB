@@ -8,14 +8,125 @@
         Voltar para home
       </router-link>
     </header>
+
+    <form>
+      <h1>Cadastro do <br />ponto de coleta</h1>
+
+      <fieldset>
+        <legend>
+          <h2>
+            Dados
+          </h2>
+        </legend>
+
+        <div class="field">
+          <div class="field">
+            <label for="name">
+              Nome da entidade
+            </label>
+
+            <input type="text" name="name" id="name" />
+          </div>
+
+          <div class="field-group">
+            <div class="field">
+              <label for="email">
+                E-mail
+              </label>
+
+              <input type="text" name="email" id="email" />
+            </div>
+
+            <div class="field">
+              <label for="whatsapp">
+                Whatsapp
+              </label>
+
+              <input type="text" name="whatsapp" id="whatsapp" />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>
+          <h2>
+            Endereço
+          </h2>
+          <span>
+            Selecione o endereço o mapa
+          </span>
+        </legend>
+
+        <div class="field-group">
+          <div class="field">
+            <label for="uf">
+              Estado (UF)
+            </label>
+
+            <select name="uf" id="uf">
+              <option value="0">Selecione uma UF</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="city">
+              Cidade
+            </label>
+
+            <select name="city" id="city">
+              <option value="0">Selecione uma cidade</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>
+          <h2>
+            Ítens de coleta
+          </h2>
+        </legend>
+
+        <ul class="items-grid">
+          <li>
+            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
+            <span>Óleo de cozinha</span>
+          </li>
+          <li>
+            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
+            <span>Óleo de cozinha</span>
+          </li>
+          <li>
+            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
+            <span>Óleo de cozinha</span>
+          </li>
+          <li>
+            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
+            <span>Óleo de cozinha</span>
+          </li>
+          <li>
+            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
+            <span>Óleo de cozinha</span>
+          </li>
+          <li>
+            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
+            <span>Óleo de cozinha</span>
+          </li>
+        </ul>
+      </fieldset>
+
+      <button type="submit">
+          Cadastrar ponto de coleta
+      </button>
+    </form>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 
-export default {
-};
+export default {};
 </script>
 <style>
 .page-create-point {
