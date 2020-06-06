@@ -58,6 +58,15 @@
           </span>
         </legend>
 
+        <l-map :center="center" :zoom="15">
+          <l-tile-layer :url="url" :attribution="attribution" />
+
+          <l-marker :lat-lng="withPopup">
+            <l-icon
+              icon-url="https://image.flaticon.com/icons/svg/1397/1397898.svg"/>
+          </l-marker>
+        </l-map>
+
         <div class="field-group">
           <div class="field">
             <label for="uf">
@@ -117,16 +126,44 @@
       </fieldset>
 
       <button type="submit">
-          Cadastrar ponto de coleta
+        Cadastrar ponto de coleta
       </button>
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import "leaflet/dist/leaflet.css";
+import { latLng } from "leaflet";
+import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet";
 
-export default {};
+export default {
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+    LIcon,
+  },
+  data() {
+    return {
+      zoom: 13,
+      center: latLng(-23.4027282, -46.7381793),
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      withPopup: latLng(-23.4027282, -46.7381793),
+      withTooltip: latLng(-21.4027282, -46.7381793),
+      currentZoom: 11.5,
+      currentCenter: latLng(-23.4027282, -46.7381793),
+      showParagraph: false,
+      mapOptions: {
+        zoomSnap: 0.5,
+      },
+      showMap: true,
+    };
+  },
+  methods: {},
+};
 </script>
 <style>
 .page-create-point {
