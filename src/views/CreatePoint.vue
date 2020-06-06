@@ -9,7 +9,7 @@
       </router-link>
     </header>
 
-    <form>
+    <form @submit.prevent="handleSubmit">
       <h1>Cadastro do <br />ponto de coleta</h1>
 
       <fieldset>
@@ -25,7 +25,7 @@
               Nome da entidade
             </label>
 
-            <input type="text" name="name" id="name" />
+            <input type="text" name="name" id="name" v-model="name" />
           </div>
 
           <div class="field-group">
@@ -34,7 +34,7 @@
                 E-mail
               </label>
 
-              <input type="text" name="email" id="email" />
+              <input type="text" name="email" id="email" v-model="email" />
             </div>
 
             <div class="field">
@@ -42,7 +42,12 @@
                 Whatsapp
               </label>
 
-              <input type="text" name="whatsapp" id="whatsapp" />
+              <input
+                type="text"
+                name="whatsapp"
+                id="whatsapp"
+                v-model="whatsapp"
+              />
             </div>
           </div>
         </div>
@@ -74,7 +79,7 @@
               Estado (UF)
             </label>
 
-            <select name="uf" id="uf" v-model="ufSelected">
+            <select name="uf" id="uf" v-model="selectedUf">
               <option value="0">Selecione uma UF</option>
               <option :value="uf" v-for="uf in ufs" :key="uf">{{ uf }}</option>
             </select>
@@ -85,7 +90,7 @@
               Cidade
             </label>
 
-            <select name="city" id="city" v-model="citySelected">
+            <select name="city" id="city" v-model="selectedCity">
               <option value="0">Selecione uma cidade</option>
               <option :value="city" v-for="city in citys" :key="city">
                 {{ city }}
@@ -103,7 +108,12 @@
         </legend>
 
         <ul class="items-grid">
-          <li v-for="item in items" :key="item.id">
+          <li
+            v-for="item in items"
+            :key="item.id"
+            @click="handleSelectItem(item.id)"
+            :class="selectedItems.includes(item.id) ? 'selected' : ''"
+          >
             <img :src="item.image" alt="óleo" />
             <span>{{ item.title }}</span>
           </li>
@@ -145,7 +155,7 @@ export default {
 
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
-      this.center = latLng(latitude, longitude)
+      this.center = latLng(latitude, longitude);
     });
   },
   data() {
@@ -160,8 +170,12 @@ export default {
       items: [],
       ufs: [],
       citys: [],
-      ufSelected: "",
-      citySelected: "",
+      selectedUf: "",
+      selectedCity: "",
+      selectedItems: [],
+      name: "",
+      email: "",
+      whatsapp: "",
     };
   },
   methods: {
@@ -190,9 +204,49 @@ export default {
     handleMapClick(event: LeafletMouseEvent) {
       this.withPopup = latLng([event.latlng.lat, event.latlng.lng]);
     },
+    handleSelectItem(id: number) {
+      const alreadySelected = this.selectedItems.findIndex(
+        (item) => item === id
+      );
+
+      if (alreadySelected >= 0) {
+        const filtredItems = this.selectedItems.filter((item) => item !== id);
+
+        this.selectedItems = filtredItems;
+      } else {
+        const filtred = [...this.selectedItems, id] as never[];
+        this.selectedItems = filtred;
+      }
+    },
+    async handleSubmit() {
+      const {
+        name,
+        email,
+        whatsapp,
+        selectedItems,
+        selectedCity,
+        selectedUf,
+        withPopup,
+      } = this;
+
+      const data = {
+        name,
+        email,
+        whatsapp,
+        selectedItems,
+        selectedCity,
+        selectedUf,
+        latitude: withPopup.lat,
+        longitude: withPopup.lat,
+      };
+
+      const result = await api.post("points", data);
+
+      console.log("aaaa",result);
+    },
   },
   watch: {
-    async ufSelected(value: string) {
+    async selectedUf(value: string) {
       if (value === "0") return;
 
       this.citys = await this.getCitys(value);
