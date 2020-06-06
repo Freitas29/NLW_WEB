@@ -58,7 +58,7 @@
           </span>
         </legend>
 
-        <l-map :center="center" :zoom="15">
+        <l-map :center="center" :zoom="15" @click="handleMapClick">
           <l-tile-layer :url="url" :attribution="attribution" />
 
           <l-marker :lat-lng="withPopup">
@@ -119,10 +119,18 @@
 
 <script lang="ts">
 import "leaflet/dist/leaflet.css";
-import { latLng } from "leaflet";
+import { latLng, LeafletMouseEvent } from "leaflet";
 import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet";
 import api from "../services/api";
 import axios from "axios";
+
+interface UF {
+  sigla: string;
+}
+
+interface City {
+  nome: string;
+}
 
 export default {
   components: {
@@ -142,8 +150,8 @@ export default {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      withPopup: latLng(-23.4027282, -46.7381793),
-      withTooltip: latLng(-21.4027282, -46.7381793),
+      withPopup: latLng(0, 0),
+      withTooltip: latLng(0, 0),
       currentZoom: 11.5,
       currentCenter: latLng(-23.4027282, -46.7381793),
       showParagraph: false,
@@ -168,7 +176,7 @@ export default {
         "https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome"
       );
 
-      const ufInitials = data.map((uf) => uf.sigla);
+      const ufInitials = data.map((uf: UF) => uf.sigla);
 
       return ufInitials;
     },
@@ -177,9 +185,12 @@ export default {
         `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`
       );
 
-      const cityNames = data.map((city) => city.nome);
+      const cityNames = data.map((city: City) => city.nome);
 
       return cityNames;
+    },
+    handleMapClick(event: LeafletMouseEvent) {
+      this.withPopup = latLng([event.latlng.lat, event.latlng.lng]);
     },
   },
   watch: {
