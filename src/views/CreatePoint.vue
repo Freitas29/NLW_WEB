@@ -142,23 +142,21 @@ export default {
   async mounted() {
     this.items = await this.getItems();
     this.ufs = await this.getUfs();
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      this.center = latLng(latitude, longitude)
+    });
   },
   data() {
     return {
       zoom: 13,
-      center: latLng(-23.4027282, -46.7381793),
+      center: latLng(-28.4027282, -34.7381793),
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       withPopup: latLng(0, 0),
       withTooltip: latLng(0, 0),
-      currentZoom: 11.5,
-      currentCenter: latLng(-23.4027282, -46.7381793),
-      showParagraph: false,
-      mapOptions: {
-        zoomSnap: 0.5,
-      },
-      showMap: true,
       items: [],
       ufs: [],
       citys: [],
