@@ -63,7 +63,8 @@
 
           <l-marker :lat-lng="withPopup">
             <l-icon
-              icon-url="https://image.flaticon.com/icons/svg/1397/1397898.svg"/>
+              icon-url="https://image.flaticon.com/icons/svg/1397/1397898.svg"
+            />
           </l-marker>
         </l-map>
 
@@ -98,29 +99,9 @@
         </legend>
 
         <ul class="items-grid">
-          <li>
-            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
-            <span>Óleo de cozinha</span>
-          </li>
-          <li>
-            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
-            <span>Óleo de cozinha</span>
-          </li>
-          <li>
-            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
-            <span>Óleo de cozinha</span>
-          </li>
-          <li>
-            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
-            <span>Óleo de cozinha</span>
-          </li>
-          <li>
-            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
-            <span>Óleo de cozinha</span>
-          </li>
-          <li>
-            <img src="http://localhost:3000/uploads/oleo.svg" alt="óleo" />
-            <span>Óleo de cozinha</span>
+          <li v-for="item in items" :key="item.id">
+            <img :src="item.image" alt="óleo" />
+            <span>{{ item.title }}</span>
           </li>
         </ul>
       </fieldset>
@@ -136,6 +117,7 @@
 import "leaflet/dist/leaflet.css";
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet";
+import api from "../services/api";
 
 export default {
   components: {
@@ -143,6 +125,10 @@ export default {
     LTileLayer,
     LMarker,
     LIcon,
+  },
+  async mounted() {
+    const { data } = await api.get("/items");
+    this.items = data;
   },
   data() {
     return {
@@ -160,6 +146,7 @@ export default {
         zoomSnap: 0.5,
       },
       showMap: true,
+      items: [],
     };
   },
   methods: {},
