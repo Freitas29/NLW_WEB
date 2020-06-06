@@ -74,8 +74,9 @@
               Estado (UF)
             </label>
 
-            <select name="uf" id="uf">
+            <select name="uf" id="uf" v-model="ufSelected">
               <option value="0">Selecione uma UF</option>
+              <option :value="uf" v-for="uf in ufs" :key="uf">{{ uf }}</option>
             </select>
           </div>
 
@@ -84,8 +85,11 @@
               Cidade
             </label>
 
-            <select name="city" id="city">
+            <select name="city" id="city" v-model="citySelected">
               <option value="0">Selecione uma cidade</option>
+              <option :value="city" v-for="city in citys" :key="city">
+                {{ city }}
+              </option>
             </select>
           </div>
         </div>
@@ -118,6 +122,7 @@ import "leaflet/dist/leaflet.css";
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet";
 import api from "../services/api";
+import axios from "axios";
 
 export default {
   components: {
@@ -127,8 +132,8 @@ export default {
     LIcon,
   },
   async mounted() {
-    const { data } = await api.get("/items");
-    this.items = data;
+    this.items = await this.getItems();
+    this.ufs = await this.getUfs();
   },
   data() {
     return {
@@ -147,9 +152,43 @@ export default {
       },
       showMap: true,
       items: [],
+      ufs: [],
+      citys: [],
+      ufSelected: "",
+      citySelected: "",
     };
   },
-  methods: {},
+  methods: {
+    async getItems() {
+      const { data } = await api.get("/items");
+      return data;
+    },
+    async getUfs() {
+      const { data } = await axios.get(
+        "https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome"
+      );
+
+      const ufInitials = data.map((uf) => uf.sigla);
+
+      return ufInitials;
+    },
+    async getCitys(uf: string) {
+      const { data } = await axios.get(
+        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`
+      );
+
+      const cityNames = data.map((city) => city.nome);
+
+      return cityNames;
+    },
+  },
+  watch: {
+    async ufSelected(value: string) {
+      if (value === "0") return;
+
+      this.citys = await this.getCitys(value);
+    },
+  },
 };
 </script>
 <style>
